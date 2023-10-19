@@ -21,6 +21,10 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 def items_read(container, max_item_count=100):
     items = list(container.read_all_items(max_item_count))
 
+    for item in items:
+        print(item)
+
+
     return items
 
 def item_create(container, item):
@@ -175,6 +179,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info(f"DokTool - Prompts Management: handle '{method}")
 
     match method:
+        # GET:     Get all items or one item by ID
+        # POST:    Create a new item
+        # PUT:     Update a item
+        # DELETE:  Delete a Item
+        # HEAD:    Get all items without data (just ids)
+        # OPTIONS: Show possible actions /API Links
+
         case "GET":
             if id is None:
                 items = items_read(container)
@@ -194,5 +205,5 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             items = {}
 
     #
-    additional = {"method": method}
-    return handleResponse(items, additional=additional, config=config)
+    # additional = {"method": method}
+    return handleResponse(items, additional=None, config=None)
