@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "5ebb6434-852c-4ab4-b390-732c19784c8c",
+		"name": "Spiegel - DokTool: Prompts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28402092"
+	},
+	"item": [
+		{
+			"name": "localhost",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_LOCAL}}/api/prompt",
+							"host": [
+								"{{HOST_LOCAL}}"
+							],
+							"path": [
+								"api",
+								"prompt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_LOCAL}}/api/prompt?id=item_01_2",
+							"host": [
+								"{{HOST_LOCAL}}"
+							],
+							"path": [
+								"api",
+								"prompt"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "item_01_2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post geocheck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"item_01\",\r\n    \"name\": \"GEOCHECK\",\r\n    \"prompts\": [\r\n        {\r\n            \"role\": \"SYSTEM\",\r\n            \"prompt\": \"Du bist ein sehr gründlicher Fact-Checker und überprüfst die Richtigkeit journalistischer Texte.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Bitte überprüfe den folgenden Satz auf geografische Genauigkeit und Richtigkeit, also Angaben zu Städten, Ländern, Gebirgen, Flüssen, Meeren und anderen geographischen Merkmalen, die genannt werden, überprüfe die korrekte Schreibweise und die korrekte geographische Lage dieser Merkmale, überprüfe, ob die beschriebenen Orte tatsächlich existieren und ob die im Satz beschriebenen geographischen Beziehungen (zum Beispiel die relative Lage von Orten zueinander) korrekt sind.\"\r\n        }, \r\n        {\r\n            \"role\": \"ASSISTANT\",\r\n            \"prompt\": \"Gerne, wenn Du mir den Satz zeigst, kann ich ihn auf Fehler bei geografischen Angaben überprüfen.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Hier kommt der zu überprüfende Satz. Bitte überprüfe alle geographischen Angaben in dem folgenden Satz, also Angaben zu Städten, Ländern, Gebirgen, Flüssen, Meeren und anderen geographischen Merkmalen, die genannt werden, überprüfe die korrekte Schreibweise und die korrekte geographische Lage dieser Merkmale, überprüfe, ob die beschriebenen Orte tatsächlich existieren und ob die im Satz beschriebenen geographischen Beziehungen (zum Beispiel die relative Lage von Orten zueinander) korrekt sind. Bitte benenne ausschließlich tatsächliche Fehler im Satz, verzichte auf die Wiedergabe korrekter Darstellungen: \"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_LOCAL}}/api/prompt?id=1",
+							"host": [
+								"{{HOST_LOCAL}}"
+							],
+							"path": [
+								"api",
+								"prompt"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post structure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"item_02\",\r\n    \"name\": \"STRUCTURE\",\r\n    \"prompts\": [\r\n        {\r\n            \"role\": \"SYSTEM\",\r\n            \"prompt\": \"Du bist ein sehr gründlicher Fact-Checker und überprüfst die Richtigkeit journalistischer Texte.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Zur Vorbereitung eines Fact-Checks sollst Du die gegebenen Auswertungen von Fehlern in eine strukturierte Form bringen, bitte fasse kurz zusammen 'Fehler:...', 'Korrektur:...', vermeide Doppelungen.\"\r\n        }, \r\n        {\r\n            \"role\": \"ASSISTANT\",\r\n            \"prompt\": \"Gerne, wenn Du mir die Sätze zeigst, kann ich die Fact-Checking-Anmerkungen zu den gefundenen Fehlern vorstrukturieren.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Hier kommen die Sätze. Bitte bringe sie in eine strukturierte Form, bitte fasse sie kurz zusammen, immer in dieser Form 'Fehler:...', 'Korrektur:...' - bitte gebe nur die Sätze wieder, keine einleitenden Worte, vermeide Doppelungen/redundante Korrekturen: \"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_LOCAL}}/api/prompt?id=1",
+							"host": [
+								"{{HOST_LOCAL}}"
+							],
+							"path": [
+								"api",
+								"prompt"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"Du bist ein sehr gründlicher Faktenchecker\"\r\n}"
+						},
+						"url": {
+							"raw": "{{HOST_LOCAL}}/api/prompt?id=item_01_2",
+							"host": [
+								"{{HOST_LOCAL}}"
+							],
+							"path": [
+								"api",
+								"prompt"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "item_01_2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "azurewebsites",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ENDPOINT_PROMPT}}",
+							"host": [
+								"{{ENDPOINT_PROMPT}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ENDPOINT_PROMPT}}?id=1",
+							"host": [
+								"{{ENDPOINT_PROMPT}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post geocheck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"item_03_1\",\r\n    \"name\": \"GEOCHECK\",\r\n    \"prompts\": [\r\n        {\r\n            \"role\": \"SYSTEM\",\r\n            \"prompt\": \"Du bist ein sehr gründlicher Fact-Checker und überprüfst die Richtigkeit journalistischer Texte.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Bitte überprüfe den folgenden Satz auf geografische Genauigkeit und Richtigkeit, also Angaben zu Städten, Ländern, Gebirgen, Flüssen, Meeren und anderen geographischen Merkmalen, die genannt werden, überprüfe die korrekte Schreibweise und die korrekte geographische Lage dieser Merkmale, überprüfe, ob die beschriebenen Orte tatsächlich existieren und ob die im Satz beschriebenen geographischen Beziehungen (zum Beispiel die relative Lage von Orten zueinander) korrekt sind.\"\r\n        }, \r\n        {\r\n            \"role\": \"ASSISTANT\",\r\n            \"prompt\": \"Gerne, wenn Du mir den Satz zeigst, kann ich ihn auf Fehler bei geografischen Angaben überprüfen.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Hier kommt der zu überprüfende Satz. Bitte überprüfe alle geographischen Angaben in dem folgenden Satz, also Angaben zu Städten, Ländern, Gebirgen, Flüssen, Meeren und anderen geographischen Merkmalen, die genannt werden, überprüfe die korrekte Schreibweise und die korrekte geographische Lage dieser Merkmale, überprüfe, ob die beschriebenen Orte tatsächlich existieren und ob die im Satz beschriebenen geographischen Beziehungen (zum Beispiel die relative Lage von Orten zueinander) korrekt sind. Bitte benenne ausschließlich tatsächliche Fehler im Satz, verzichte auf die Wiedergabe korrekter Darstellungen.\"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ENDPOINT_PROMPT}}?id=1",
+							"host": [
+								"{{ENDPOINT_PROMPT}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post structure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"item_02_1\",\r\n    \"name\": \"STRUCTURE\",\r\n    \"prompts\": [\r\n        {\r\n            \"role\": \"SYSTEM\",\r\n            \"prompt\": \"Du bist ein sehr gründlicher Fact-Checker und überprüfst die Richtigkeit journalistischer Texte.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Zur Vorbereitung eines Fact-Checks sollst Du die gegebenen Auswertungen von Fehlern in eine strukturierte Form bringen, bitte fasse kurz zusammen 'Fehler:...', 'Korrektur:...', vermeide Doppelungen.\"\r\n        }, \r\n        {\r\n            \"role\": \"ASSISTANT\",\r\n            \"prompt\": \"Gerne, wenn Du mir die Sätze zeigst, kann ich die Fact-Checking-Anmerkungen zu den gefundenen Fehlern vorstrukturieren.\"\r\n        },\r\n        {\r\n            \"role\": \"USER\",\r\n            \"prompt\": \"Hier kommen die Sätze. Bitte bringe sie in eine strukturierte Form, bitte fasse sie kurz zusammen, immer in dieser Form 'Fehler:...', 'Korrektur:...' - bitte gebe nur die Sätze wieder, keine einleitenden Worte, vermeide Doppelungen/redundante Korrekturen: \"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ENDPOINT_PROMPT}}?id=1",
+							"host": [
+								"{{ENDPOINT_PROMPT}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"Dies ist der neu Prompt\"\r\n}"
+						},
+						"url": {
+							"raw": "{{ENDPOINT_PROMPT}}?id=1",
+							"host": [
+								"{{ENDPOINT_PROMPT}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patch",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_LOCAL}}/api/prompt?id=1",
+					"host": [
+						"{{HOST_LOCAL}}"
+					],
+					"path": [
+						"api",
+						"prompt"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_LOCAL}}/api/prompt?id=item_02_1",
+					"host": [
+						"{{HOST_LOCAL}}"
+					],
+					"path": [
+						"api",
+						"prompt"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "item_02_1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
