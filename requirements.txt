@@ -1,0 +1,8 @@
+azure-functions
+azure-cosmos
+
+pre-commit
+black
+ruff
+pyupgrade
+isort
