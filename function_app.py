@@ -18,27 +18,36 @@ STATE_OK = "OK"
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
+def item_removeinternalfields(item):
+     return {k:v for k,v in item.items() if not k.startswith("_")}
+
 def items_read(container, max_item_count=100):
-    items = list(container.read_all_items(max_item_count))
+    items = []
 
-    for item in items:
-        print(item)
-
+    for item in list(container.read_all_items(max_item_count)):
+        temp = item_removeinternalfields(item)
+        items.append(temp)
 
     return items
 
 def item_create(container, item):
-    response = container.create_item(body=item)
+    response = None
 
-    return {
-        'item': item,
-        'created': response
-    }
+    try:
+        temp = container.create_item(body=item)
+        response = item_removeinternalfields(temp)
+
+    except Exception as ex:
+        message = ex.message.split('\r')[0]
+        return STATE_ERROR, response, f"{message} {ex.reason}: {ex.status_code}"
+
+    return STATE_OK, response, None
 
 def item_read(container, doc_id):
-    response = container.read_item(item=doc_id, partition_key=doc_id)
+    item = container.read_item(item=doc_id, partition_key=doc_id)
+    temp = item_removeinternalfields(item)
 
-    return response
+    return temp
 
 def item_update(container, doc_id, changes):
     olditem = item_read(container, doc_id)
@@ -53,14 +62,11 @@ def item_update(container, doc_id, changes):
     }
 
 def item_delete(container, doc_id):
-    response = container.delete_item(item=doc_id, partition_key=doc_id)
-
+    # ruff: noqa: F841
+    deleted = container.delete_item(item=doc_id, partition_key=doc_id)
     response = list(container.read_all_items())
 
-    return {
-        'items': response,
-        'deleted': doc_id
-    }
+    return response
 
 def items_query(container,  doc_id = None, query="SELECT * FROM r"):
     # query = "SELECT * FROM r WHERE r.id=@id"
@@ -123,6 +129,9 @@ def handleError(response: Response = None, message: str = None, exception: Excep
     if config is not None:
         result["config"] = config
 
+    func.HttpResponse.mimetype = 'application/json'
+    func.HttpResponse.charset = 'utf-8'
+
     return func.HttpResponse(json.dumps(result, indent=4), status_code=200)
 
 def handleResponse(response: Response = None, message: str = None, additional = None, config = None):
@@ -135,7 +144,7 @@ def handleResponse(response: Response = None, message: str = None, additional = 
     if message is not None and message != "":
         result["message"] = message
 
-    result["responses"] = response
+    result["data"] = response
 
     if additional is not None:
         result.update(additional)
@@ -143,7 +152,10 @@ def handleResponse(response: Response = None, message: str = None, additional = 
     if config is not None:
         result["config"] = config
 
-    return func.HttpResponse(json.dumps(result, indent=4), status_code=200)
+    func.HttpResponse.mimetype = 'application/json'
+    func.HttpResponse.charset = 'utf-8'
+
+    return func.HttpResponse(json.dumps(response, indent=4), status_code=200)
 
 #
 #
@@ -173,10 +185,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     except Exception as ex:
         return handleError(message = "Couild not connect to database", exception=ex, config=config)
 
-
-
     method = req.method
     logging.info(f"DokTool - Prompts Management: handle '{method}")
+
+    state = STATE_OK
 
     match method:
         # GET:     Get all items or one item by ID
@@ -192,7 +204,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             else:
                 items = item_read(container, id)
         case "POST":
-            items = item_create(container, body)
+            state, items, message = item_create(container, body)
         case "PUT":
             items = item_update(container, id, body)
         case "DELETE":
@@ -206,4 +218,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     #
     # additional = {"method": method}
-    return handleResponse(items, additional=None, config=None)
+    if (state == STATE_OK):
+        return handleResponse(items, additional=None, config=None)
+    else:
+        return handleError(message=message)
