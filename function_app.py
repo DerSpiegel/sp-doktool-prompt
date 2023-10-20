@@ -62,6 +62,7 @@ def item_update(container, doc_id, changes):
     }
 
 def item_delete(container, doc_id):
+    # Ignore Ruff Linting: Local variable `deleted` is assigned to but never used
     # ruff: noqa: F841
     deleted = container.delete_item(item=doc_id, partition_key=doc_id)
     response = list(container.read_all_items())
